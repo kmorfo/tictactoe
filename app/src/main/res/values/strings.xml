@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">TicTacToe</string>
+
+    <!--    Home Screen-->
+    <string name="firebase" translatable="false">Firebase</string>
+    <string name="joingame">Join to Game</string>
+    <string name="creategame">Create game</string>
+
+
+    <!-- Game Screen-->
+    <string name="congratulations">Congratulations!</string>
+    <string name="player1">Player 1</string>
+    <string name="player2">Player 2</string>
+    <string name="gamewon">Game won by: </string>
+    <string name="yourturn">Your turn</string>
+    <string name="rivalturn">Rival turn</string>
+    <string name="waitingpl2">Waiting for player 2</string>
+    <string name="backtohome">Back to Home</string>
+
+    <!--Content descriptions -->
+    <string name="applogo">App Logo</string>
 </resources>

@@ -33,11 +33,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import es.rlujancreations.tictactoe.R
 import es.rlujancreations.tictactoe.ui.model.GameModel
 import es.rlujancreations.tictactoe.ui.model.PlayerType
 import es.rlujancreations.tictactoe.ui.theme.Accent
@@ -83,18 +85,22 @@ fun GameScreen(
                     modifier = Modifier.padding(24.dp)
                 ) {
                     Text(
-                        text = "¡Felicidades!",
+                        text = stringResource(id = R.string.congratulations),
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Bold,
                         color = Orange
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     val currentWinner =
-                        if (winner == PlayerType.FirstPlayer) "Player 1" else "Player 2"
-                    Text(text = "Ha ganado el jugador:", fontSize = 22.sp, color = Accent)
+                        if (winner == PlayerType.FirstPlayer) R.string.player1 else R.string.player2
+                    Text(
+                        text = stringResource(id = R.string.gamewon),
+                        fontSize = 22.sp,
+                        color = Accent
+                    )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = currentWinner,
+                        text = stringResource(id = currentWinner),
                         fontSize = 26.sp,
                         fontWeight = FontWeight.Bold,
                         color = OrangeLight
@@ -104,7 +110,7 @@ fun GameScreen(
                         onClick = { navigateToHome() },
                         colors = ButtonDefaults.buttonColors(backgroundColor = Orange)
                     ) {
-                        Text(text = "Volver al inicio", color = Accent)
+                        Text(text = stringResource(id = R.string.backtohome), color = Accent)
                     }
                 }
             }
@@ -138,14 +144,11 @@ fun Board(game: GameModel?, onItemSelected: (Int) -> Unit) {
                     .show()
             }
         )
-        val status = if (game.isGameReady == true) {
-            if (game.isMyTurn) {
-                "Tu turno"
-            } else {
-                "Turno rival"
-            }
+        val status = if (game.isGameReady) {
+            if (game.isMyTurn) stringResource(id = R.string.yourturn)
+            else stringResource(id = R.string.rivalturn)
         } else {
-            "Esperando por el jugador 2"
+            stringResource(id = R.string.waitingpl2)
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = status, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Accent)

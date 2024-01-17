@@ -14,18 +14,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
-import androidx.compose.material.Divider
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Switch
-import androidx.compose.material.SwitchColors
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -86,18 +83,18 @@ fun Header() {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(12.dp),
-                painter = painterResource(id = R.drawable.logotictac),
-                contentDescription = "logo"
+                painter = painterResource(id = R.drawable.tictactoe),
+                contentDescription = stringResource(id = R.string.applogo)
             )
         }
         Text(
-            text = "Firebase",
+            text = stringResource(id = R.string.firebase),
             fontSize = 32.sp,
             color = Orange,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "3 en raya",
+            text = stringResource(id = R.string.app_name),
             fontSize = 28.sp,
             color = OrangeLight,
             fontWeight = FontWeight.Bold
@@ -140,7 +137,7 @@ fun CreateGame(onCreateGame: () -> Unit) {
         onClick = { onCreateGame() },
         colors = ButtonDefaults.buttonColors(backgroundColor = Orange)
     ) {
-        Text(text = "Create game", color = Accent)
+        Text(text = stringResource(id = R.string.creategame), color = Accent)
     }
 }
 
@@ -164,7 +161,7 @@ fun JoinGame(onJoinGame: (String) -> Unit) {
             enabled = text.isNotEmpty(),
             colors = ButtonDefaults.buttonColors(backgroundColor = Orange)
         ) {
-            Text(text = "Joint to game", color = Accent)
+            Text(text = stringResource(id = R.string.joingame), color = Accent)
         }
     }
 }
