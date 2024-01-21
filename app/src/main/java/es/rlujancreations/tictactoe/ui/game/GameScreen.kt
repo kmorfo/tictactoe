@@ -1,7 +1,7 @@
 package es.rlujancreations.tictactoe.ui.game
 
 import android.content.Context
-import android.widget.Toast
+import android.content.Intent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -30,11 +30,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ClipboardManager
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -115,18 +112,14 @@ fun GameScreen(
                 }
             }
         }
-    } else {
-        Board(game, onItemSelected = { gameViewModel.onItemSelected(it) })
-
-    }
-
+    } else Board(game, onItemSelected = { gameViewModel.onItemSelected(it) })
 }
 
 @Composable
 fun Board(game: GameModel?, onItemSelected: (Int) -> Unit) {
     if (game == null) return
 
-    val clipBoard: ClipboardManager = LocalClipboardManager.current
+//    val clipBoard: ClipboardManager = LocalClipboardManager.current
     val context: Context = LocalContext.current
 
     Column(
@@ -138,10 +131,8 @@ fun Board(game: GameModel?, onItemSelected: (Int) -> Unit) {
         Text(text = game.gameId, color = BlueLink, modifier = Modifier
             .padding(24.dp)
             .clickable {
-                clipBoard.setText(AnnotatedString(game.gameId))
-                Toast
-                    .makeText(context, "Copiado!", Toast.LENGTH_SHORT)
-                    .show()
+//                clipBoard.setText(AnnotatedString(game.gameId))
+                shareGameId(context=context,gameId=game.gameId)
             }
         )
         val status = if (game.isGameReady) {
@@ -198,4 +189,18 @@ fun GameItem(playerType: PlayerType, onItemSelected: () -> Unit) {
             )
         }
     }
+}
+
+private fun shareGameId(context: Context,gameId:String){
+    val uri = "https://rlujancreations.es"
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/html"
+        putExtra(Intent.EXTRA_TEXT, "$uri/$gameId")
+    }
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            context.getString(R.string.sharegame)
+        )
+    )
 }

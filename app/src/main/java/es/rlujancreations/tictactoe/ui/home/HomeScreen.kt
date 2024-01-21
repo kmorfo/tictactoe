@@ -1,5 +1,8 @@
 package es.rlujancreations.tictactoe.ui.home
 
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -27,10 +30,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -50,8 +55,19 @@ import es.rlujancreations.tictactoe.ui.theme.OrangeLight
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
+    gameId: String = "",
     navigateToGame: (String, String, Boolean) -> Unit
 ) {
+    val context = LocalContext.current
+    val idNotValid: String = stringResource(id = R.string.gameidnotvalid)
+
+    if (gameId.isNotEmpty() ) {
+        homeViewModel.onJoinGame(
+            gameId = gameId,
+            gameIdNotValid = { gameIdNotValid(context = context, text = idNotValid) },
+            navigateToGame = navigateToGame
+        )
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -63,8 +79,18 @@ fun HomeScreen(
         Header()
         Body(
             onCreateGame = { homeViewModel.onCreateGame(navigateToGame) },
-            onJoinGame = { gameId -> homeViewModel.onJoinGame(gameId, navigateToGame) })
+            onJoinGame = { gameId ->
+                homeViewModel.onJoinGame(
+                    gameId = gameId,
+                    gameIdNotValid = { gameIdNotValid(context = context, text = idNotValid) },
+                    navigateToGame = navigateToGame
+                )
+            })
     }
+}
+
+private fun gameIdNotValid(context: Context, text: String): Unit {
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }
 
 @Composable
@@ -146,6 +172,7 @@ fun JoinGame(onJoinGame: (String) -> Unit) {
     var text by remember { mutableStateOf("") }
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(
+            maxLines = 1,
             value = text,
             onValueChange = { text = it },
             colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -165,3 +192,4 @@ fun JoinGame(onJoinGame: (String) -> Unit) {
         }
     }
 }
+

@@ -6,6 +6,7 @@
     <string name="joingame">Join to Game</string>
     <string name="creategame">Create game</string>
 
+    <string name="gameidnotvalid">GameId is not valid!</string>
 
     <!-- Game Screen-->
     <string name="congratulations">Congratulations!</string>
@@ -16,6 +17,8 @@
     <string name="rivalturn">Rival turn</string>
     <string name="waitingpl2">Waiting for player 2</string>
     <string name="backtohome">Back to Home</string>
+    <string name="sharegame">Share game Id</string>
+
 
     <!--Content descriptions -->
     <string name="applogo">App Logo</string>

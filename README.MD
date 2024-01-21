@@ -10,3 +10,12 @@ Listado de partidas
           playerType
         Player2
         PlayerTurn
+
+
+## DeepLink
+It's needed to create and upload the file `assetlinks.json` to your domain into de folder `.well-know`.
+You can create and check the all, in Android studio. 
+```
+Click on Tools -> App Link Assistant 
+```
+follow the instructions 

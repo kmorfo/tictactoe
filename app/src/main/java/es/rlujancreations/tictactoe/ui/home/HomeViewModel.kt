@@ -1,5 +1,10 @@
 package es.rlujancreations.tictactoe.ui.home
 
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,12 +31,17 @@ class HomeViewModel @Inject constructor(
         navigateToGame(gameId, userId, owner)
     }
 
-    fun onJoinGame(gameId: String, navigateToGame: (String, String, Boolean) -> Unit) {
+    fun onJoinGame(
+        gameId: String,
+        gameIdNotValid: () -> Unit,
+        navigateToGame: (String, String, Boolean) -> Unit
+    ) {
         val owner = false
+        val userId = createUserId()
         viewModelScope.launch {
             firebaseService.checkIfGameExists(gameId).collect {
-                if (it)
-                    navigateToGame(gameId, createUserId(), owner)
+                if (it) navigateToGame(gameId, userId, owner)
+                else gameIdNotValid()
             }
         }
     }

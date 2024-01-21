@@ -12,12 +12,15 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import es.rlujancreations.tictactoe.ui.core.ContentWrapper
 import es.rlujancreations.tictactoe.ui.theme.TicTacToeTheme
+import android.content.Intent
+import android.net.Uri
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var navigationController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             TicTacToeTheme {
                 // A surface container using the 'background' color from the theme
@@ -26,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     navigationController = rememberNavController()
-                    ContentWrapper(navigationController = navigationController)
+                    ContentWrapper(navController = navigationController)
                 }
             }
         }
